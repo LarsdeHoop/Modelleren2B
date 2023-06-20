@@ -70,28 +70,41 @@ alfa_A, alfa_B,alfa_C, alfa_D, beta_A,beta_B,beta_C,beta_D= parameters
 
 T_end=len(GroupA)+5*4
 t, SA,IA,SB,IB,SC,IC,SD,ID = Model(T_end,alfa_A, alfa_B,alfa_C, alfa_D, beta_A,beta_B,beta_C,beta_D)
-plt.plot(IA,color='blue')
-plt.plot(IB,color='red')
-plt.plot(IC,color='green')
-plt.plot(ID,color='purple')
-plt.plot(GroupA,color='blue') #I_A
-plt.plot(GroupB,color='red') #I_B
-plt.plot(GroupC,color='green') #I_C
-plt.plot(GroupD,color='purple') #I_D
+x = list(range(1,T_end+1,4))
+years = [str(2019+k) for k in range(len(x))]
+fig = plt.figure()
+ax = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+
+ax.plot(t,IA,color='blue')
+ax.plot(t,IB,color='red')
+ax.plot(t,IC,color='green')
+ax.plot(t,ID,color='purple')
+ax.plot(GroupA,color='blue') #I_A
+ax.plot(GroupB,color='red') #I_B
+ax.plot(GroupC,color='green') #I_C
+ax.plot(GroupD,color='purple') #I_D
+ax.set_xticks(x)
+ax.set_xticklabels(years)
+plt.ylim([0,80])
 plt.legend(["13-24", "25-44", "45-64","65+"])
-plt.xlabel("Quarters")
+plt.xlabel("Years")
 plt.ylabel("Users(million)")
 plt.show()
 
 # percentages:
+fig = plt.figure()
+ax = fig.add_axes([0.1, 0.1, 0.8, 0.8])
 N = IA+IB+IC+ID
-plt.plot(IA/N,color='blue')
-plt.plot(IB/N,color='red')
-plt.plot(IC/N,color='green')
-plt.plot(ID/N,color='purple')
-plt.legend(["13-24", "25-44", "45-64","65+"])
-plt.xlabel("Quarters")
+ax.plot(t,100*IA/N,color='blue')
+ax.plot(t,100*IB/N,color='red')
+ax.plot(t,100*IC/N,color='green')
+ax.plot(t,100*ID/N,color='purple')
+ax.set_xticks(x)
+ax.set_xticklabels(years)
+plt.ylim([0,40])
+plt.legend(["13-24", "25-44", "45-64","65+"], loc = "lower right")
+plt.xlabel("Years")
 plt.ylabel("Fraction of users(%)")
 plt.axvline(len(GroupA)-1,color="red",linestyle='dotted')
-plt.text(len(GroupA)-1+0.5, min(ID/N) , 'now', color='red', ha='left', va='top')
+plt.text(len(GroupA)-1+0.5, min(ID/N)+1.2 , 'now', color='red', ha='left', va='top')
 plt.show()
